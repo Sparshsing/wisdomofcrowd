@@ -11,17 +11,19 @@ export default function ThemeToggle() {
     setMounted(true)
   }, [])
 
+  if (!mounted) {
+    return <div className="w-8 h-8" /> // Prevents layout shift
+  }
+
   return (
     <button
-      className="fixed top-4 right-4 p-2 rounded-lg bg-gray-200 dark:bg-gray-800"
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      aria-label="Toggle theme"
+      className="w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
+      aria-label={resolvedTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
     >
-      {mounted && (
-        <span aria-hidden="true">
-          {resolvedTheme === 'dark' ? '🌞' : '🌙'}
-        </span>
-      )}
+      <span className="text-lg" aria-hidden="true">
+        {resolvedTheme === 'dark' ? '🌞' : '🌙'}
+      </span>
     </button>
   )
 }
