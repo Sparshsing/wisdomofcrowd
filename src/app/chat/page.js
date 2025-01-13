@@ -20,6 +20,7 @@ export default function Chat() {
   useEffect(() => {
     // Get API key from environment variable
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    console.log('dev log' +String(apiKey).slice(0, 2));
     if (!apiKey) {
       setError('API key not found. Please set NEXT_PUBLIC_GEMINI_API_KEY in your environment.');
       return;

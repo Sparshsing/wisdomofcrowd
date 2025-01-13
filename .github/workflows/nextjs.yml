@@ -34,6 +34,17 @@ jobs:
         env:
             NEXT_PUBLIC_GEMINI_API_KEY: ${{ secrets.NEXT_PUBLIC_GEMINI_API_KEY }}
         run: npm run build
+
+      - name: Debug Environment Variables
+        run: |
+          if [ -n "$NEXT_PUBLIC_GEMINI_API_KEY" ]; then
+            echo " NEXT_PUBLIC_GEMINI_API_KEY is set and not empty"
+          else
+            echo " NEXT_PUBLIC_GEMINI_API_KEY is empty or not set"
+            exit 1
+          fi
+        env:
+          NEXT_PUBLIC_GEMINI_API_KEY: ${{ secrets.NEXT_PUBLIC_GEMINI_API_KEY }}
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
