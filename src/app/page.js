@@ -25,6 +25,18 @@ export default function Home() {
               <p className="opacity-60">Intelligent debate platform for meaningful discussions</p>
             </div>
           </div>
+
+          <div className="mt-16 text-center">
+            <a 
+              href="/sparsh" 
+              className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90 transition-all duration-200 text-lg font-semibold"
+            >
+              Meet the Developer
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
         </div>
       </main>
     </>

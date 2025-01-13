@@ -38,6 +38,9 @@ export default function Portfolio() {
                   <FaLinkedin size={24} />
                 </a>
               </div>
+              <p className="mt-4 text-gray-600 dark:text-gray-400">
+                <a href="mailto:sparshsing96@gmail.com" className="hover:text-blue-500">sparshsing96@gmail.com</a>
+              </p>
               <div className="mt-6">
                 <a href="/chat" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90 transition-opacity">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +69,7 @@ export default function Portfolio() {
                     <p className="text-gray-600 dark:text-gray-400 mb-2">TELUS International AI Data Solutions · Full-time</p>
                     <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">Aug 2022 - Aug 2024 · 2 years 1 month</p>
                     <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2">
-                      <li>Worked on computer vision tasks including 3D point clouds, SLAM, Calibration, and image segmentation</li>
+                      <li>Developed solutions using computer vision technologies including 3D point clouds, SLAM, Calibration, and image segmentation</li>
                       <li>Designed and developed data labelling pipelines for major automotive industry companies</li>
                       <li>Led successful pilot projects generating over $1M in revenue</li>
                       <li>Created automation utilities for annotation user onboarding</li>
@@ -81,6 +84,26 @@ export default function Portfolio() {
                       <li>Developed custom applications for real estate and retail clients</li>
                       <li>Created web applications and automation tools for small businesses</li>
                       <li>Provided tailored solutions to improve operational efficiency</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-white/50 dark:bg-white/5 backdrop-blur-sm rounded-xl p-6 transition-all hover:shadow-lg">
+                    <h3 className="text-xl font-semibold mb-2">Associate Software Engineer</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-2">Aptean · Full-time</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">Aug 2019 - Jan 2021 · 1 yr 6 mos</p>
+                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2">
+                      <li>Worked on implementing new features, fixing bugs, code refactoring to improve the performance for an ERP product</li>
+                      <li>Solved client issues by analyzing their SQL Database</li>
+                      <li>Worked primarily with .NET and SQL</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-white/50 dark:bg-white/5 backdrop-blur-sm rounded-xl p-6 transition-all hover:shadow-lg">
+                    <h3 className="text-xl font-semibold mb-2">Intern</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-2">National Instruments</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">Jan 2019 - Jun 2019 · 6 mos</p>
+                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2">
+                      <li>Developed integration tests for a Data Acquisition Software</li>
                     </ul>
                   </div>
                 </div>
