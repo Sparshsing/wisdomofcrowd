@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Header from '../components/Header';
+import { ChatService } from '@/utils/chatService';
 
 export default function Chat() {
   const [prompt, setPrompt] = useState('');
@@ -11,8 +12,24 @@ export default function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentResponse, setCurrentResponse] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const [error, setError] = useState('');
   const abortController = useRef(null);
   const messagesEndRef = useRef(null);
+  const chatService = useRef(null);
+
+  useEffect(() => {
+    // Get API key from environment variable
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      setError('API key not found. Please set NEXT_PUBLIC_GEMINI_API_KEY in your environment.');
+      return;
+    }
+    try {
+      chatService.current = new ChatService(apiKey);
+    } catch (err) {
+      setError(err.message);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -25,10 +42,15 @@ export default function Chat() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!prompt.trim()) return;
+    if (!chatService.current) {
+      setError('Chat service not initialized');
+      return;
+    }
 
     setIsLoading(true);
     setIsStreaming(true);
-    const newMessage = { role: 'user', content: prompt };
+    setError('');
+    const newMessage = { role: 'user', content: prompt.trim() };
     setMessages(prev => [...prev, newMessage]);
     setCurrentResponse('');
     setPrompt('');
@@ -37,57 +59,37 @@ export default function Chat() {
     abortController.current = new AbortController();
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: [...messages, newMessage]
-        }),
-        signal: abortController.current.signal, // Add abort signal
-      });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
       let fullResponse = '';
+      await chatService.current.streamResponse(
+        [...messages, newMessage],
+        (chunk) => {
+          fullResponse += chunk;
+          setCurrentResponse(prev => prev + chunk);
+        },
+        (error) => {
+          console.error('Stream error:', error);
+          setError('An error occurred while getting the response');
+          setIsLoading(false);
+          setIsStreaming(false);
+        },
+        abortController.current.signal
+      );
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        fullResponse += chunk;
-        setCurrentResponse(fullResponse);
+      // Only add the assistant message if we have a response
+      if (fullResponse) {
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: fullResponse 
+        }]);
       }
-
-      // After streaming is complete, add the full message to the chat
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: fullResponse 
-      }]);
       setCurrentResponse('');
 
     } catch (error) {
-      if (error.name === 'AbortError') {
-        // Handle abort case
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: currentResponse + '\n\n_Response stopped by user._' 
-        }]);
-      } else {
-        console.error('Error:', error);
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: 'Sorry, there was an error processing your request.' 
-        }]);
-      }
+      console.error('Error:', error);
+      setError('An error occurred while getting the response');
     } finally {
       setIsLoading(false);
       setIsStreaming(false);
-      abortController.current = null;
     }
   };
 
@@ -166,6 +168,11 @@ export default function Chat() {
           </div>
           
           <div className="flex-1 mb-4 space-y-4 overflow-y-auto max-h-[calc(100vh-400px)] rounded-lg bg-white dark:bg-gray-800 p-4 shadow-lg">
+            {error && (
+              <div className="p-4 mb-4 text-red-700 bg-red-100 dark:bg-red-900/50 dark:text-red-200 rounded-lg">
+                {error}
+              </div>
+            )}
             {messages.length === 0 && !currentResponse && (
               <div className="text-center text-gray-500 dark:text-gray-400">
                 Start a conversation by typing a message below.
