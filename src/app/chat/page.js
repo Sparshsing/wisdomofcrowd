@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Header from '../components/Header';
-import { ChatService } from '@/utils/chatService';
+import { ChatService } from '../../utils/chatService';
 
 export default function Chat() {
   const [prompt, setPrompt] = useState('');
