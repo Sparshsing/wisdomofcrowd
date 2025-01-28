@@ -24,7 +24,6 @@ export default function Privacy() {
         <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
           <li><strong>activeTab:</strong> To access the selected text on the active tab.</li>
           <li><strong>contextMenus:</strong> To provide a right-click menu for token and word count calculations.</li>
-          <li><strong>host_permissions:</strong> To enable functionality on all websites.</li>
           <li><strong>scripting:</strong> To calculate and display the results on the active tab.</li>
         </ul>
 
