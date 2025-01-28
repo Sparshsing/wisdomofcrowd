@@ -15,13 +15,25 @@ export default function TokenCounter() {
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
             Instantly count tokens in your selected text across any website
           </p>
-          <Link
-            href="https://chrome.google.com/webstore/detail/macfkbmckhomamgmhjcjmgkbghlfgbji?utm_source=website"
-            target="_blank"
-            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity"
-          >
-            Add to Chrome
-          </Link>
+          <div className="space-y-4">
+            <div>
+              <Link
+                href="https://chrome.google.com/webstore/detail/macfkbmckhomamgmhjcjmgkbghlfgbji?utm_source=website"
+                target="_blank"
+                className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity"
+              >
+                Add to Chrome
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/tools/tokencounter/privacy"
+                className="text-sm text-gray-600 dark:text-gray-400 hover:underline"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Main Features */}
