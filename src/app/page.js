@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Header from "./components/Header";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -24,6 +25,28 @@ export default function Home() {
               <h3 className="text-2xl font-bold mb-4">Debate Smart</h3>
               <p className="opacity-60">Intelligent debate platform for meaningful discussions</p>
             </div>
+
+            {/* Token Counter Box */}
+            <Link
+              href="/tools/tokencounter"
+              className="block p-6 bg-gray-100/50 dark:bg-gray-800/50 rounded-lg hover:bg-gray-200/50 dark:hover:bg-gray-700/50 transition-colors"
+            >
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/images/tools/tokencounter/icon.png"
+                  alt="Token Counter"
+                  width={48}
+                  height={48}
+                  className="w-12 h-12"
+                />
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Token Counter</h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Chrome extension to count tokens in selected text
+                  </p>
+                </div>
+              </div>
+            </Link>
           </div>
 
           <div className="mt-16 text-center">
